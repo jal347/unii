@@ -26,10 +26,9 @@ def get_uniprot():
     request = requests.get(url).json()
     doc = {}
 
-    # TODO: raise runtimeerror
     if request["meta"]["results"]["total"] > 26000:
         logging.error("Exceeds limit to paginate see this page for more details: https://open.fda.gov/apis/paging/")
-        return
+        raise RuntimeError('Limit Exceeded')
     else:
         count = (request["meta"]["results"]["total"]-1)//1000
 
@@ -50,9 +49,7 @@ def get_uniprot():
 
 def load_uniprot():
     docs = get_uniprot()
-    # print(docs["P01116"])
     ids = query_uniprot(list(docs.keys()))
-    recs = []
     for prot, unii in docs.items():
         gene_ids = ids[0][prot]
         for gene_id in gene_ids:
@@ -61,3 +58,8 @@ def load_uniprot():
                 "unii": unii
             }
             yield rec
+
+
+generator = load_uniprot()
+
+
