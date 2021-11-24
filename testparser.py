@@ -1,14 +1,12 @@
 import requests
 import logging
 
+
 from biothings_client import get_client
 from collections import defaultdict
 
 GENE_CLIENT = get_client('gene')
-
-
 logger = logging.getLogger(__name__)
-
 
 def query_uniprot(uniprot: list):
     """Use biothings_client.py to query uniprot codes and get back '_id' in mygene.info
@@ -52,7 +50,9 @@ def get_uniprot():
 
 def load_uniprot():
     docs = get_uniprot()
+    # print(docs["P01116"])
     ids = query_uniprot(list(docs.keys()))
+    recs = []
     for prot, unii in docs.items():
         gene_ids = ids[0][prot]
         for gene_id in gene_ids:
@@ -61,6 +61,3 @@ def load_uniprot():
                 "unii": unii
             }
             yield rec
-
-
-
