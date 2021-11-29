@@ -1,0 +1,12 @@
+{
+    "version": "0.2",
+    "__metadata__": {
+        "url": "https://open.fda.gov/apis/other/substance/",
+        "license_url": "https://open.fda.gov/license/",
+        "license": "Creative Commons CC0 1.0 Universal"
+    },
+    "uploader" : {
+        "parser" : "parser:load_uniprot",
+        "on_duplicates" : "error"
+    }
+}
